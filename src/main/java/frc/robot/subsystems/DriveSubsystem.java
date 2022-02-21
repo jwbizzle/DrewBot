@@ -55,12 +55,21 @@ public class DriveSubsystem extends SubsystemBase {
     // }
   }
 
-  public void setLeftMotor(double motorSetting){
-    this.m_leftMotors.set(motorSetting);
-  }
+  /**
+   * Drives the robot using tank controls.
+   *
+   * @param accleration the commanded acceleration
+   * @param steering the commanded steering
+   */
+  public void gtaDrive(double accleration, double steering) {
+    
+    // Pass in the left speed first (which is the sum of acceleration and steering) 
+    // and then the right speed (which is the difference).  Use the tankDrive method.
+    m_drive.tankDrive(accleration + steering, accleration - steering);
+    // m_drive.arcadeDrive(accleration, steering);
 
-  public void setRightMotor(double motorSetting){
-    this.m_rightMotors.set(motorSetting);
+    // Display values for debugging.
+    // System.out.println("The acceleration value is " + accleration + " and the steering value is " + steering + ".");
   }
 
   /**

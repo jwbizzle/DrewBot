@@ -6,16 +6,19 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.util.function.DoubleSupplier;
 
 public class GrandTheftDrive extends CommandBase {
   private final DriveSubsystem m_drive;
-  private double m_acceleration;
-  private double m_steering;
+  private DoubleSupplier m_rightTrigger;
+  private DoubleSupplier m_leftTrigger;
+  private DoubleSupplier m_steering;
 
   /** Creates a new DefaultDrive. */
-  public GrandTheftDrive(DriveSubsystem subsystem, double acceleration, double steering) {
+  public GrandTheftDrive(DriveSubsystem subsystem, DoubleSupplier rightTrigger, DoubleSupplier leftTrigger, DoubleSupplier steering) {
     m_drive = subsystem;
-    m_acceleration = acceleration;
+    m_rightTrigger = rightTrigger;
+    m_leftTrigger = leftTrigger;
     m_steering = steering;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -29,8 +32,7 @@ public class GrandTheftDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.setLeftMotor(m_acceleration + m_steering);
-    m_drive.setRightMotor(m_acceleration - m_steering);
+    m_drive.gtaDrive(m_rightTrigger.getAsDouble() - m_leftTrigger.getAsDouble(), m_steering.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

@@ -50,15 +50,15 @@ public class RobotContainer {
        
     // Configure default commands
     // Set the default drive command to split-stick arcade drive
-    m_robotDrive.setDefaultCommand(
-      // A split-stick arcade command, with forward/backward controlled by the left
-      // hand, and turning controlled by the right.
-      new ArcadeDrive(
-        m_robotDrive, m_driverController::getLeftY, m_driverController::getRightX));
-
     
-    // m_robotDrive.setDefaultCommand(
-    //   new GrandTheftDrive(m_robotDrive, m_driverController.getRightTriggerAxis() - m_driverController.getLeftTriggerAxis(), m_driverController.getLeftX()));
+    // A split-stick arcade command, with forward/backward controlled by the left
+    // hand, and turning controlled by the right.
+    // m_robotDrive.setDefaultCommand(new ArcadeDrive(m_robotDrive, m_driverController::getLeftY, m_driverController::getRightX));
+
+    // A split-stick arcade command, with forward/backward controlled by the left/right triggers 
+    // and turning controlled by the left stick.   
+    m_robotDrive.setDefaultCommand(
+      new GrandTheftDrive(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
 
     // Add commands to the autonomous command chooser
     // m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
