@@ -13,25 +13,38 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class DriveConstants {
-        public static final int kLeftFrontMotorId = 1;
-        public static final int kLeftBackMotorId = 2;
-        public static final int kRightFrontMotorId = 3;
-        public static final int kRightBackMotorId = 4;
-    }
-            
-      public static final class AutoConstants {
-        // These would rely on an encoder which isn't part of the KoP
-        public static final double kAutoDriveDistanceInches = 60;
-        public static final double kAutoBackupDistanceInches = 20;
-        
-        public static final double kAutoDriveSpeed = 0.5;
-      }
+  public static final class DriveConstants {
+    public static final int kLeftFrontMotorId = 1;
+    public static final int kLeftBackMotorId = 2;
+    public static final int kRightFrontMotorId = 3;
+    public static final int kRightBackMotorId = 4;
+  }
+
+  public static final class ArmConstants {
+    public static final double kArmHoldUp = 0.08;
+    public static final double kArmHoldDown = 0.13;
+    public static final double kArmTravel = 0.5;
     
-      public static final class OIConstants {
-        public static final int kDriverControllerPort = 0;
-        public static final int kLeftX = 0;
-        public static final int kLeftTrigger = 2;
-        public static final int kRightTrigger = 3;
-      }
+    public static final double kArmTimeUp = 0.5;
+    public static final double kArmTimeDown = 0.35;
+  }
+
+  public static final class HalfDriveConstants {
+    public static final double kHalfDriveScale = 0.5;
+  }
+
+  public static final class AutoConstants {
+    // These would rely on an encoder which isn't part of the KoP
+    public static final double kAutoDriveDistanceInches = 60;
+    public static final double kAutoBackupDistanceInches = 20;
+
+    public static final double kAutoDriveSpeed = 0.5;
+  }
+
+  public static final class OIConstants {
+    public static final int kDriverControllerPort = 0;
+    public static final int kLeftX = 0;
+    public static final int kLeftTrigger = 2;
+    public static final int kRightTrigger = 3;
+  }
 }
