@@ -4,18 +4,28 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import frc.robot.Constants.IntakeConstants;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  VictorSPX m_intakeMotor = new VictorSPX(6);
+  MotorController m_intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorId, MotorType.kBrushed);
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {}
+
+  public void setSpeed(double forward, double reverse) {
+    if (forward > .2 || reverse > .2) {
+      m_intakeMotor.set(forward - reverse);
+    }
+    else { 
+      m_intakeMotor.set(0);
+    }
+  }
 
   @Override
   public void periodic() {

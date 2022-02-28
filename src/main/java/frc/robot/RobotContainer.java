@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.commands.ArcadeDrive;
+import frc.robot.subsystems.IntakeSubsystem;
+// import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.GrandTheftDrive;
 import frc.robot.commands.HalveDriveSpeed;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -29,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final IntakeSubsystem m_robotIntake = new IntakeSubsystem();
 
   // The autonomous routines
 
@@ -41,6 +43,9 @@ public class RobotContainer {
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+
+  // The opreators's controller
+  XboxController m_operatorController = new XboxController(OIConstants.kOperatorControllerPort);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -74,9 +79,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // While holding the shoulder button, drive at half speed
+    // While the driver is holding the shoulder button, drive at half speed
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .whenHeld(new HalveDriveSpeed(m_robotDrive));
+
+    // Control the intake motor speed while the operator is holder the triggers
+    // TODO
   }
 
   /**
