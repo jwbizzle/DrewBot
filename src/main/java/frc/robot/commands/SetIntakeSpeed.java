@@ -9,13 +9,13 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeSpeed extends CommandBase {
+public class SetIntakeSpeed extends CommandBase {
   private final IntakeSubsystem m_intake;
   private DoubleSupplier m_rightTrigger;
   private DoubleSupplier m_leftTrigger;
 
   /** Creates a new IntakeSpeed. */
-  public IntakeSpeed(IntakeSubsystem subsystem, DoubleSupplier rightTrigger, DoubleSupplier leftTrigger) {
+  public SetIntakeSpeed(IntakeSubsystem subsystem, DoubleSupplier rightTrigger, DoubleSupplier leftTrigger) {
     m_intake = subsystem;
     m_rightTrigger = rightTrigger;
     m_leftTrigger = leftTrigger;
