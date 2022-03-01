@@ -31,6 +31,7 @@ public class SetIntakeSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("Intake Right: " + m_rightTrigger.getAsDouble() + " Intake Left: " + m_leftTrigger.getAsDouble());
     m_intake.setSpeed(m_rightTrigger.getAsDouble(), m_leftTrigger.getAsDouble());
   }
 

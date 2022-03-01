@@ -32,6 +32,7 @@ public class GrandTheftDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // System.out.println("Drive Right: " + m_rightTrigger.getAsDouble() + " Drive Left: " + m_leftTrigger.getAsDouble());
     m_drive.gtaDrive(m_rightTrigger.getAsDouble() - m_leftTrigger.getAsDouble(), m_steering.getAsDouble());
   }
 

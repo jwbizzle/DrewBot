@@ -22,6 +22,7 @@ import frc.robot.commands.SetIntakeSpeed;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -86,10 +87,12 @@ public class RobotContainer {
         .whenHeld(new HalveDriveSpeed(m_robotDrive));
 
     // Control the intake motor speed while the operator is holder the triggers
-    new JoystickButton(m_operatorController, Axis.kRightTrigger.value)
-        .whenHeld(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
-        new JoystickButton(m_operatorController, Axis.kLeftTrigger.value)
-        .whenHeld(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
+    // new JoystickButton(m_operatorController, Axis.kRightTrigger.value)
+    //    .whenHeld(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
+    // new JoystickButton(m_operatorController, Axis.kLeftTrigger.value)
+    //    .whenHeld(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
+    new JoystickButton(m_operatorController, XboxController.Axis.kRightTrigger.value).or(new JoystickButton(m_operatorController, XboxController.Axis.kLeftTrigger.value))
+      .whileActiveContinuous(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
   }
 
   /**
