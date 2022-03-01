@@ -8,7 +8,6 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 
 // import frc.robot.Constants.AutoConstants;
@@ -87,12 +86,11 @@ public class RobotContainer {
         .whenHeld(new HalveDriveSpeed(m_robotDrive));
 
     // Control the intake motor speed while the operator is holder the triggers
-    // new JoystickButton(m_operatorController, Axis.kRightTrigger.value)
-    //    .whenHeld(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
-    // new JoystickButton(m_operatorController, Axis.kLeftTrigger.value)
-    //    .whenHeld(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
-    new JoystickButton(m_operatorController, XboxController.Axis.kRightTrigger.value).or(new JoystickButton(m_operatorController, XboxController.Axis.kLeftTrigger.value))
-      .whileActiveContinuous(new SetIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
+    Trigger leftTriggerButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > OIConstants.kDeadbandThreshold);
+    Trigger rightTriggerButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > OIConstants.kDeadbandThreshold);
+
+    leftTriggerButton.or(rightTriggerButton).whileActiveContinuous(new SetIntakeSpeed(m_robotIntake,
+        m_operatorController::getRightTriggerAxis, m_operatorController::getLeftTriggerAxis));
   }
 
   /**

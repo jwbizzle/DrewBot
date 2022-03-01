@@ -51,8 +51,6 @@ public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
-    public static final int kLeftX = 0;
-    public static final int kLeftTrigger = 2;
-    public static final int kRightTrigger = 3;
+    public static final double kDeadbandThreshold = 0.2;
   }
 }
