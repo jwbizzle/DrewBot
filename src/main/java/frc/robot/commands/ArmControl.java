@@ -6,19 +6,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 
-public class SetIntakeSpeed extends CommandBase {
-  private final IntakeSubsystem m_intake;
-  private int m_speed;
+public class ArmControl extends CommandBase {
+  private final ArmSubsystem m_arm;
+  private int m_test;
 
   /** Creates a new SetReverseIntakeSpeed. */
-  public SetIntakeSpeed(IntakeSubsystem subsystem, int speed) {
-    m_intake = subsystem;
-    m_speed = speed;
+  public ArmControl(ArmSubsystem subsystem, int test) {
+    m_arm = subsystem;
+    m_test = test;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_intake);
+    addRequirements(m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +28,7 @@ public class SetIntakeSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setSpeed(m_speed);
+    m_arm.setSpeed(m_test);
    
   }
 

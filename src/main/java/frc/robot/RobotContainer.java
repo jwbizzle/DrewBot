@@ -14,6 +14,8 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.commands.ArmControl;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.GrandTheftDrive;
 import frc.robot.commands.HalveDriveSpeed;
@@ -33,6 +35,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final IntakeSubsystem m_robotIntake = new IntakeSubsystem();
+  private final ArmSubsystem m_robotArm = new ArmSubsystem();
 
   // The autonomous routines
 
@@ -86,13 +89,17 @@ public class RobotContainer {
         .whenHeld(new HalveDriveSpeed(m_robotDrive));
 
     // Control the intake motor speed while the operator is holder the triggers
-    Trigger leftTriggerButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > OIConstants.kDeadbandThreshold);
     Trigger rightTriggerButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > OIConstants.kDeadbandThreshold);
+    Trigger leftTriggerButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > OIConstants.kDeadbandThreshold);
 
     rightTriggerButton.whileActiveOnce(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorForwardSpeed));
     leftTriggerButton.whileActiveOnce(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorReverseSpeed));
 
     rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorStopSpeed));
+
+    //Arm Buttons
+    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new ArmControl(m_robotArm, 1));
+    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenReleased(new ArmControl(m_robotArm, 0));
   }
 
   /**

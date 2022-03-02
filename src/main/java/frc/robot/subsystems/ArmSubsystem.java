@@ -4,21 +4,21 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ArmConstants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class ArmSubsystem extends SubsystemBase {
 
-  CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorId, MotorType.kBrushed);
+  CANSparkMax m_armMotor = new CANSparkMax(ArmConstants.kArmMotorId, MotorType.kBrushed);
 
   /** Creates a new IntakeSubsystem. */
-  public IntakeSubsystem() {}
+  public ArmSubsystem() {}
 
   public void setSpeed(int speed) {
-    m_intakeMotor.set(speed);
+    m_armMotor.set(speed);
   }
 
   @Override
