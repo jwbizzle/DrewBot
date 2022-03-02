@@ -9,16 +9,15 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class SetIntakeSpeed extends CommandBase {
+public class SetForwardIntakeSpeed extends CommandBase {
   private final IntakeSubsystem m_intake;
   private DoubleSupplier m_rightTrigger;
   private DoubleSupplier m_leftTrigger;
 
   /** Creates a new IntakeSpeed. */
-  public SetIntakeSpeed(IntakeSubsystem subsystem, DoubleSupplier rightTrigger, DoubleSupplier leftTrigger) {
+  public SetForwardIntakeSpeed(IntakeSubsystem subsystem, DoubleSupplier rightTrigger) {
     m_intake = subsystem;
     m_rightTrigger = rightTrigger;
-    m_leftTrigger = leftTrigger;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_intake);
@@ -31,8 +30,8 @@ public class SetIntakeSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Intake Right: " + m_rightTrigger.getAsDouble() + " Intake Left: " + m_leftTrigger.getAsDouble());
-    m_intake.setSpeed(m_rightTrigger.getAsDouble(), m_leftTrigger.getAsDouble());
+    //System.out.println("Intake Right: " + m_rightTrigger.getAsDouble() + " Intake Left: " + m_leftTrigger.getAsDouble());
+    m_intake.setForwardSpeed(m_rightTrigger.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

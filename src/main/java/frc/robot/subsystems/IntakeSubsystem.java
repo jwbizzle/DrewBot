@@ -17,13 +17,8 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {}
 
-  public void setSpeed(double forward, double reverse) {
-    if (forward > .2 || reverse > .2) {
-      m_intakeMotor.set(forward - reverse);
-    }
-    else { 
-      m_intakeMotor.set(0);
-    }
+  public void setForwardSpeed(double forward) {
+    m_intakeMotor.set(forward);
   }
 
   @Override
