@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class SetArmPosition extends CommandBase {
   private final ArmSubsystem m_arm;
   private boolean m_inputArmUp;
-  private boolean m_armUp = true;
-  private double m_lastBurstTime;
 
   /** Creates a new SetReverseIntakeSpeed. */
   public SetArmPosition(ArmSubsystem subsystem, boolean inputArmUp) {
