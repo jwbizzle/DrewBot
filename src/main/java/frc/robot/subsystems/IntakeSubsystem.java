@@ -20,9 +20,13 @@ public class IntakeSubsystem extends SubsystemBase {
   public void setForwardSpeed(double forward) {
     m_intakeMotor.set(forward);
   }
-  
+
   public void setReverseSpeed(double reverse) {
     m_intakeMotor.set(reverse);
+  }
+
+  public void setStopSpeed(double stop) {
+    m_intakeMotor.set(stop);
   }
 
   @Override
