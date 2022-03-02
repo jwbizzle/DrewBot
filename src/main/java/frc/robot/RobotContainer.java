@@ -98,8 +98,8 @@ public class RobotContainer {
     rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorStopSpeed));
 
     //Arm Buttons
-    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new SetArmPosition(m_robotArm, 1));
-    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenReleased(new SetArmPosition(m_robotArm, 0));
+    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new SetArmPosition(m_robotArm, true));
+    new JoystickButton(m_operatorController, Button.kLeftBumper.value).whenPressed(new SetArmPosition(m_robotArm, false));
   }
 
   /**

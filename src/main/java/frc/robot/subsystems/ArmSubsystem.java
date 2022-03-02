@@ -17,7 +17,7 @@ public class ArmSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public ArmSubsystem() {}
 
-  public void setSpeed(int speed) {
+  public void setSpeed(Double speed) {
     m_armMotor.set(speed);
   }
 

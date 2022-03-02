@@ -4,16 +4,25 @@
 
 package frc.robot.commands;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.Constants.ArmConstants;
+
+import com.ctre.phoenix.led.StrobeAnimation;
+import edu.wpi.first.wpilibj.Timer;
+
+
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetArmPosition extends CommandBase {
   private final ArmSubsystem m_arm;
-  private int m_speed;
+  private boolean m_inputArmUp;
+  private boolean m_armUp;
+  private double lastBurstTime;
 
   /** Creates a new SetReverseIntakeSpeed. */
-  public SetArmPosition(ArmSubsystem subsystem, int speed) {
+  public SetArmPosition(ArmSubsystem subsystem, boolean inputArmUp) {
     m_arm = subsystem;
-    m_speed = speed;
+    m_inputArmUp = inputArmUp;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_arm);
@@ -26,7 +35,40 @@ public class SetArmPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_arm.setSpeed(m_speed);
+    if(m_armUp){
+      if(Timer.getFPGATimestamp() - lastBurstTime < ArmConstants.kArmTimeUp){
+        m_arm.setSpeed(ArmConstants.kArmTravel);
+      }
+      else{
+        m_arm.setSpeed(ArmConstants.kArmHoldUp);
+      }
+    }
+    else{
+      if(Timer.getFPGATimestamp() - lastBurstTime < ArmConstants.kArmTimeDown){
+        m_arm.setSpeed(-ArmConstants.kArmTravel);
+      }
+      else{
+        m_arm.setSpeed(-ArmConstants.kArmHoldDown);
+      }
+    }
+
+
+    if(m_inputArmUp && !m_armUp){
+      lastBurstTime = Timer.getFPGATimestamp();
+      //System.out.println(lastBurstTime);
+      m_armUp = true;
+
+    }
+    else if (!m_inputArmUp && m_armUp){
+      lastBurstTime = Timer.getFPGATimestamp();
+      //System.out.println(lastBurstTime);
+      m_armUp = false;
+    }
+
+
+    System.out.print(lastBurstTime);
+    System.out.print(" ");
+    System.out.println(m_armUp);
   }
 
   // Called once the command ends or is interrupted.
