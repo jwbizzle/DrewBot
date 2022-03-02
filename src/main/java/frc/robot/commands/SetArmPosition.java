@@ -3,19 +3,17 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
+import frc.robot.subsystems.ArmSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.ArmSubsystem;
-
-public class ArmControl extends CommandBase {
+public class SetArmPosition extends CommandBase {
   private final ArmSubsystem m_arm;
-  private int m_test;
+  private int m_speed;
 
   /** Creates a new SetReverseIntakeSpeed. */
-  public ArmControl(ArmSubsystem subsystem, int test) {
+  public SetArmPosition(ArmSubsystem subsystem, int speed) {
     m_arm = subsystem;
-    m_test = test;
+    m_speed = speed;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_arm);
@@ -28,8 +26,7 @@ public class ArmControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_arm.setSpeed(m_test);
-   
+    m_arm.setSpeed(m_speed);
   }
 
   // Called once the command ends or is interrupted.

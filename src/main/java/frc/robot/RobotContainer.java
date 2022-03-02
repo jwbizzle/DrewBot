@@ -15,7 +15,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.commands.ArmControl;
+import frc.robot.commands.SetArmPosition;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.GrandTheftDrive;
 import frc.robot.commands.HalveDriveSpeed;
@@ -98,8 +98,8 @@ public class RobotContainer {
     rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorStopSpeed));
 
     //Arm Buttons
-    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new ArmControl(m_robotArm, 1));
-    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenReleased(new ArmControl(m_robotArm, 0));
+    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new SetArmPosition(m_robotArm, 1));
+    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenReleased(new SetArmPosition(m_robotArm, 0));
   }
 
   /**
