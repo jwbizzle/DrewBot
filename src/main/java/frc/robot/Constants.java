@@ -22,7 +22,9 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int kIntakeMotorId = 5;
-    public static final double kIntakeMotorMaxSpeed = 1.0; 
+    public static final int kIntakeMotorForwardSpeed = 1; 
+    public static final int kIntakeMotorReverseSpeed = -1;
+    public static final int kIntakeMotorStopSpeed = 0;
   }
 
   public static final class ArmConstants {

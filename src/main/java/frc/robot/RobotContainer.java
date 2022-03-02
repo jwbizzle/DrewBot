@@ -9,7 +9,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.Constants.IntakeConstants;
 // import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -17,9 +17,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.GrandTheftDrive;
 import frc.robot.commands.HalveDriveSpeed;
-import frc.robot.commands.SetForwardIntakeSpeed;
-import frc.robot.commands.SetIntakeSpeedStop;
-import frc.robot.commands.SetReverseIntakeSpeed;
+import frc.robot.commands.SetIntakeSpeed;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -91,10 +89,10 @@ public class RobotContainer {
     Trigger leftTriggerButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > OIConstants.kDeadbandThreshold);
     Trigger rightTriggerButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > OIConstants.kDeadbandThreshold);
 
-    rightTriggerButton.whileActiveOnce(new SetForwardIntakeSpeed(m_robotIntake));
-    leftTriggerButton.whileActiveOnce(new SetReverseIntakeSpeed(m_robotIntake));
+    rightTriggerButton.whileActiveOnce(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorForwardSpeed));
+    leftTriggerButton.whileActiveOnce(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorReverseSpeed));
 
-    rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeedStop(m_robotIntake));
+    rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorStopSpeed));
   }
 
   /**
