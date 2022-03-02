@@ -6,18 +6,14 @@ package frc.robot.commands;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.Constants.ArmConstants;
 
-import com.ctre.phoenix.led.StrobeAnimation;
 import edu.wpi.first.wpilibj.Timer;
-
-
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetArmPosition extends CommandBase {
   private final ArmSubsystem m_arm;
   private boolean m_inputArmUp;
-  private boolean m_armUp;
-  private double lastBurstTime;
+  private boolean m_armUp = true;
+  private double m_lastBurstTime;
 
   /** Creates a new SetReverseIntakeSpeed. */
   public SetArmPosition(ArmSubsystem subsystem, boolean inputArmUp) {
@@ -36,7 +32,7 @@ public class SetArmPosition extends CommandBase {
   @Override
   public void execute() {
     if(m_armUp){
-      if(Timer.getFPGATimestamp() - lastBurstTime < ArmConstants.kArmTimeUp){
+      if(Timer.getFPGATimestamp() - m_lastBurstTime < ArmConstants.kArmTimeUp){
         m_arm.setSpeed(ArmConstants.kArmTravel);
       }
       else{
@@ -44,7 +40,7 @@ public class SetArmPosition extends CommandBase {
       }
     }
     else{
-      if(Timer.getFPGATimestamp() - lastBurstTime < ArmConstants.kArmTimeDown){
+      if(Timer.getFPGATimestamp() - m_lastBurstTime < ArmConstants.kArmTimeDown){
         m_arm.setSpeed(-ArmConstants.kArmTravel);
       }
       else{
@@ -54,19 +50,19 @@ public class SetArmPosition extends CommandBase {
 
 
     if(m_inputArmUp && !m_armUp){
-      lastBurstTime = Timer.getFPGATimestamp();
+      m_lastBurstTime = Timer.getFPGATimestamp();
       //System.out.println(lastBurstTime);
       m_armUp = true;
 
     }
     else if (!m_inputArmUp && m_armUp){
-      lastBurstTime = Timer.getFPGATimestamp();
+      m_lastBurstTime = Timer.getFPGATimestamp();
       //System.out.println(lastBurstTime);
       m_armUp = false;
     }
 
 
-    System.out.print(lastBurstTime);
+    System.out.print(m_lastBurstTime);
     System.out.print(" ");
     System.out.println(m_armUp);
   }
