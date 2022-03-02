@@ -20,6 +20,10 @@ public class IntakeSubsystem extends SubsystemBase {
   public void setForwardSpeed(double forward) {
     m_intakeMotor.set(forward);
   }
+  
+  public void setReverseSpeed(double reverse) {
+    m_intakeMotor.set(reverse);
+  }
 
   @Override
   public void periodic() {

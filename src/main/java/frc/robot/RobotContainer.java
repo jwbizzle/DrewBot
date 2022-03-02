@@ -18,6 +18,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.GrandTheftDrive;
 import frc.robot.commands.HalveDriveSpeed;
 import frc.robot.commands.SetForwardIntakeSpeed;
+import frc.robot.commands.SetIntakeSpeedStop;
+import frc.robot.commands.SetReverseIntakeSpeed;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -89,7 +91,10 @@ public class RobotContainer {
     Trigger leftTriggerButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > OIConstants.kDeadbandThreshold);
     Trigger rightTriggerButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > OIConstants.kDeadbandThreshold);
 
-    rightTriggerButton.whileActiveContinuous(new SetForwardIntakeSpeed(m_robotIntake, m_operatorController::getRightTriggerAxis));
+    rightTriggerButton.whileActiveOnce(new SetForwardIntakeSpeed(m_robotIntake));
+    leftTriggerButton.whileActiveOnce(new SetReverseIntakeSpeed(m_robotIntake));
+
+    rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeedStop(m_robotIntake));
   }
 
   /**
