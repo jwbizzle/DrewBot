@@ -31,8 +31,8 @@ public class SetArmPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_armUp){
-      if(Timer.getFPGATimestamp() - m_lastBurstTime < ArmConstants.kArmTimeUp){
+    if(m_arm.getPosition()){
+      if(Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeUp){
         m_arm.setSpeed(ArmConstants.kArmTravel);
       }
       else{
@@ -40,7 +40,7 @@ public class SetArmPosition extends CommandBase {
       }
     }
     else{
-      if(Timer.getFPGATimestamp() - m_lastBurstTime < ArmConstants.kArmTimeDown){
+      if(Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeDown){
         m_arm.setSpeed(-ArmConstants.kArmTravel);
       }
       else{
@@ -49,22 +49,22 @@ public class SetArmPosition extends CommandBase {
     }
 
 
-    if(m_inputArmUp && !m_armUp){
-      m_lastBurstTime = Timer.getFPGATimestamp();
+    if(m_inputArmUp && !m_arm.getPosition()){
+      m_arm.setLastBurtTime(Timer.getFPGATimestamp());
       //System.out.println(lastBurstTime);
-      m_armUp = true;
+      m_arm.setPosition(true);
 
     }
-    else if (!m_inputArmUp && m_armUp){
-      m_lastBurstTime = Timer.getFPGATimestamp();
+    else if (!m_inputArmUp && m_arm.getPosition()){
+      m_arm.setLastBurtTime(Timer.getFPGATimestamp());
       //System.out.println(lastBurstTime);
-      m_armUp = false;
+      m_arm.setPosition(false);
     }
 
 
-    System.out.print(m_lastBurstTime);
+    System.out.print(m_arm.getLastBurtTime());
     System.out.print(" ");
-    System.out.println(m_armUp);
+    System.out.println(m_arm.getPosition());
   }
 
   // Called once the command ends or is interrupted.
