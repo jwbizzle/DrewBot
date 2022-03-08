@@ -60,9 +60,9 @@ public class SetArmPosition extends CommandBase {
     }
 
 
-    System.out.print(m_arm.getLastBurtTime());
-    System.out.print(" ");
-    System.out.println(m_arm.getPosition());
+    // System.out.print(m_arm.getLastBurtTime());
+    // System.out.print(" ");
+    // System.out.println(m_arm.getPosition());
   }
 
   // Called once the command ends or is interrupted.
