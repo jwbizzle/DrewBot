@@ -9,7 +9,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class AutoDrive extends CommandBase {
   private final DriveSubsystem m_drive;
-  private double m_time, m_speed, m_rotation;
+  private double m_speed, m_rotation;
 
   /** Creates a new AutoDrive. */
   public AutoDrive(DriveSubsystem subsystem, double speed, double rotation) {

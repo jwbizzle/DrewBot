@@ -45,7 +45,7 @@ public final class Constants {
   public static final class AutoConstants {
     // Autonomous drive constants
     public static final double kAutoDriveSpeed = 0.5;
-    public static final double kAutoDriveRotation = 0.5;
+    public static final double kAutoDriveRotation = 0.0;
     public static final double kAutoDriveDuration = 3;
 
   }
