@@ -4,21 +4,23 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.util.function.DoubleSupplier;
 
-import frc.robot.subsystems.IntakeSubsystem;
+public class ArcadeDriveCommand extends CommandBase {
+  private final DriveSubsystem m_drive;
+  private DoubleSupplier m_forward;
+  private DoubleSupplier m_rotation;
 
-public class SetIntakeSpeed extends CommandBase {
-  private final IntakeSubsystem m_intake;
-  private double m_speed;
-
-  /** Creates a new SetReverseIntakeSpeed. */
-  public SetIntakeSpeed(IntakeSubsystem subsystem, double speed) {
-    m_intake = subsystem;
-    m_speed = speed;
+  /** Creates a new ArcadeDrive. */
+  public ArcadeDriveCommand(DriveSubsystem subsystem, DoubleSupplier forward, DoubleSupplier rotation) {
+    m_drive = subsystem;
+    m_forward = forward;
+    m_rotation = rotation;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_intake);
+    addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
@@ -28,8 +30,7 @@ public class SetIntakeSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setSpeed(m_speed);
-   
+    m_drive.arcadeDrive(m_forward.getAsDouble(), m_rotation.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

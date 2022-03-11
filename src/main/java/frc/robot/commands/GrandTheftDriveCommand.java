@@ -8,14 +8,14 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
 
-public class GrandTheftDrive extends CommandBase {
+public class GrandTheftDriveCommand extends CommandBase {
   private final DriveSubsystem m_drive;
   private DoubleSupplier m_rightTrigger;
   private DoubleSupplier m_leftTrigger;
   private DoubleSupplier m_steering;
 
   /** Creates a new DefaultDrive. */
-  public GrandTheftDrive(DriveSubsystem subsystem, DoubleSupplier rightTrigger, DoubleSupplier leftTrigger, DoubleSupplier steering) {
+  public GrandTheftDriveCommand(DriveSubsystem subsystem, DoubleSupplier rightTrigger, DoubleSupplier leftTrigger, DoubleSupplier steering) {
     m_drive = subsystem;
     m_rightTrigger = rightTrigger;
     m_leftTrigger = leftTrigger;

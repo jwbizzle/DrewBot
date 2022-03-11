@@ -15,13 +15,13 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.commands.SetArmPosition;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutoDrive;
+import frc.robot.commands.SetArmPositionCommand;
+import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.SetDriveSpeedCommand;
 // import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.GrandTheftDrive;
-import frc.robot.commands.HalveDriveSpeed;
-import frc.robot.commands.SetIntakeSpeed;
+import frc.robot.commands.GrandTheftDriveCommand;
+import frc.robot.commands.HalveDriveSpeedCommand;
+import frc.robot.commands.SetIntakeSpeedCommand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -42,7 +42,7 @@ public class RobotContainer {
   // The autonomous routines
 
   // A simple auto routine that drives forward a specified duration in seconds and then stops.
-  private final Command m_simpleAuto = new AutoDrive(m_robotDrive, AutoConstants.kAutoDriveSpeed, AutoConstants.kAutoDriveRotation).withTimeout(AutoConstants.kAutoDriveDuration);
+  private final Command m_simpleAuto = new SetDriveSpeedCommand(m_robotDrive, AutoConstants.kAutoDriveSpeed, AutoConstants.kAutoDriveRotation).withTimeout(AutoConstants.kAutoDriveDuration);
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -69,7 +69,7 @@ public class RobotContainer {
     // A split-stick arcade command, with forward/backward controlled by the left/right triggers 
     // and turning controlled by the left stick.   
     m_robotDrive.setDefaultCommand(
-      new GrandTheftDrive(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
+      new GrandTheftDriveCommand(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
 
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Auto Drive", m_simpleAuto);
@@ -87,20 +87,20 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // While the driver is holding the shoulder button, drive at half speed
     new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whenHeld(new HalveDriveSpeed(m_robotDrive));
+        .whenHeld(new HalveDriveSpeedCommand(m_robotDrive));
 
     // Control the intake motor speed while the operator is holder the triggers
     Trigger rightTriggerButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > OIConstants.kDeadbandThreshold);
     Trigger leftTriggerButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > OIConstants.kDeadbandThreshold);
 
-    rightTriggerButton.whileActiveOnce(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorForwardSpeed));
-    leftTriggerButton.whileActiveOnce(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorReverseSpeed));
+    rightTriggerButton.whileActiveOnce(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorForwardSpeed));
+    leftTriggerButton.whileActiveOnce(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorReverseSpeed));
 
-    rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeed(m_robotIntake, IntakeConstants.kIntakeMotorStopSpeed));
+    rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorStopSpeed));
 
     //Arm Buttons
-    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new SetArmPosition(m_robotArm, true));
-    new JoystickButton(m_operatorController, Button.kLeftBumper.value).whenPressed(new SetArmPosition(m_robotArm, false));
+    new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new SetArmPositionCommand(m_robotArm, true));
+    new JoystickButton(m_operatorController, Button.kLeftBumper.value).whenPressed(new SetArmPositionCommand(m_robotArm, false));
   }
 
   /**

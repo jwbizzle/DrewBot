@@ -9,12 +9,12 @@ import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SetArmPosition extends CommandBase {
+public class SetArmPositionCommand extends CommandBase {
   private final ArmSubsystem m_arm;
   private boolean m_inputArmUp;
 
   /** Creates a new SetReverseIntakeSpeed. */
-  public SetArmPosition(ArmSubsystem subsystem, boolean inputArmUp) {
+  public SetArmPositionCommand(ArmSubsystem subsystem, boolean inputArmUp) {
     m_arm = subsystem;
     m_inputArmUp = inputArmUp;
 

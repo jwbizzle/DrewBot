@@ -7,12 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class AutoDrive extends CommandBase {
+public class SetDriveSpeedCommand extends CommandBase {
   private final DriveSubsystem m_drive;
   private double m_speed, m_rotation;
 
   /** Creates a new AutoDrive. */
-  public AutoDrive(DriveSubsystem subsystem, double speed, double rotation) {
+  public SetDriveSpeedCommand(DriveSubsystem subsystem, double speed, double rotation) {
     m_drive = subsystem;
     m_speed = speed;
     m_rotation = rotation;

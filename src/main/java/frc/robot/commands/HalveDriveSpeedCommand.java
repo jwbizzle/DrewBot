@@ -4,39 +4,35 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants.HalfDriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import java.util.function.DoubleSupplier;
 
-public class ArcadeDrive extends CommandBase {
+public class HalveDriveSpeedCommand extends CommandBase {
   private final DriveSubsystem m_drive;
-  private DoubleSupplier m_forward;
-  private DoubleSupplier m_rotation;
 
-  /** Creates a new ArcadeDrive. */
-  public ArcadeDrive(DriveSubsystem subsystem, DoubleSupplier forward, DoubleSupplier rotation) {
-    m_drive = subsystem;
-    m_forward = forward;
-    m_rotation = rotation;
+  /** Creates a new HalveDriveSpeed. */
+  public HalveDriveSpeedCommand(DriveSubsystem drive) {
+    m_drive = drive;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_drive.setMaxOutput(HalfDriveConstants.kHalfDriveScale);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_drive.arcadeDrive(m_forward.getAsDouble(), m_rotation.getAsDouble());
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
-
+  public void end(boolean interrupted) {
+    m_drive.setMaxOutput(1);
+  }
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
