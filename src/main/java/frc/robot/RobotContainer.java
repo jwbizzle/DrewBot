@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
-// import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.SetArmPosition;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoDrive;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.GrandTheftDrive;
 import frc.robot.commands.HalveDriveSpeed;
@@ -39,9 +41,8 @@ public class RobotContainer {
 
   // The autonomous routines
 
-  // A simple auto routine that drives forward a specified distance, and then stops.
-  // private final Command m_simpleAuto =
-  //     new DriveDistance(AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
+  // A simple auto routine that drives forward a specified duration in seconds and then stops.
+  private final Command m_simpleAuto = new AutoDrive(m_robotDrive, AutoConstants.kAutoDriveSpeed, AutoConstants.kAutoDriveRotation).withTimeout(AutoConstants.kAutoDriveDuration);
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -71,7 +72,7 @@ public class RobotContainer {
       new GrandTheftDrive(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
 
     // Add commands to the autonomous command chooser
-    // m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
+    m_chooser.setDefaultOption("Auto Drive", m_simpleAuto);
 
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);

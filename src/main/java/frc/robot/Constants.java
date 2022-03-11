@@ -43,11 +43,11 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    // These would rely on an encoder which isn't part of the KoP
-    public static final double kAutoDriveDistanceInches = 60;
-    public static final double kAutoBackupDistanceInches = 20;
-
+    // Autonomous drive constants
     public static final double kAutoDriveSpeed = 0.5;
+    public static final double kAutoDriveRotation = 0.5;
+    public static final double kAutoDriveDuration = 3;
+
   }
 
   public static final class OIConstants {
