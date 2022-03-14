@@ -15,13 +15,13 @@ package frc.robot;
 public final class Constants {
   public static final class DriveConstants {
     public static final int kLeftFrontMotorId = 1;
-    public static final int kLeftBackMotorId = 5;
+    public static final int kLeftBackMotorId = 2;
     public static final int kRightFrontMotorId = 3;
     public static final int kRightBackMotorId = 4;
   }
 
   public static final class IntakeConstants {
-    public static final int kIntakeMotorId = 2;
+    public static final int kIntakeMotorId = 5;
     public static final int kIntakeMotorForwardSpeed = 1; 
     public static final int kIntakeMotorReverseSpeed = -1;
     public static final int kIntakeMotorStopSpeed = 0;
@@ -44,7 +44,7 @@ public final class Constants {
 
   public static final class AutoConstants {
     // Autonomous drive constants
-    public static final double kAutoDriveSpeed = 0.5;
+    public static final double kAutoDriveSpeed = 0.1;
     public static final double kAutoDriveRotation = 0.0;
     public static final double kAutoDriveDuration = 3;
 
