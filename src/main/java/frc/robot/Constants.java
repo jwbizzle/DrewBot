@@ -31,10 +31,12 @@ public final class Constants {
     public static final int kArmMotorId = 6; 
 
     public static final double kArmHoldUp = 0.08;
-    public static final double kArmHoldDown = 0.13;
-    public static final double kArmTravel = 0.5;
+    public static final double kArmHoldDown = 0.08;
+    public static final double kArmUpTravel = 0.3;  //Original was .5
+    public static final double kArmDownTravel = 0.2; 
+
     
-    public static final double kArmTimeUp = 0.5;
+    public static final double kArmTimeUp = 0.6; //Original was .5
     public static final double kArmTimeDown = 0.35;
   }
 

@@ -22,6 +22,7 @@ import frc.robot.commands.SetDriveSpeedCommand;
 import frc.robot.commands.GrandTheftDriveCommand;
 import frc.robot.commands.HalveDriveSpeedCommand;
 import frc.robot.commands.SetIntakeSpeedCommand;
+import frc.robot.commands.TestArmMotorCommand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;

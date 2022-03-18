@@ -31,7 +31,7 @@ public class SetArmPositionCommand extends CommandBase {
   public void execute() {
     if(m_arm.getPosition()){
       if(Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeUp){
-        m_arm.setSpeed(ArmConstants.kArmTravel);
+        m_arm.setSpeed(ArmConstants.kArmUpTravel);
       }
       else{
         m_arm.setSpeed(ArmConstants.kArmHoldUp);
@@ -39,7 +39,7 @@ public class SetArmPositionCommand extends CommandBase {
     }
     else{
       if(Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeDown){
-        m_arm.setSpeed(-ArmConstants.kArmTravel);
+        m_arm.setSpeed(-ArmConstants.kArmDownTravel);
       }
       else{
         m_arm.setSpeed(-ArmConstants.kArmHoldDown);

@@ -32,8 +32,8 @@ public class TestArmMotorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_arm.setSpeed(m_rightTrigger.getAsDouble() - m_leftTrigger.getAsDouble());
-   
+    m_arm.setForwardSpeed(m_rightTrigger.getAsDouble());
+    m_arm.setReverseSpeed(m_leftTrigger.getAsDouble()); 
   }
 
   // Called once the command ends or is interrupted.

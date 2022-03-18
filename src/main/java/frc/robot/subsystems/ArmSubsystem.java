@@ -14,15 +14,26 @@ public class ArmSubsystem extends SubsystemBase {
   private boolean m_isUp = true;
   private double m_lastBurstTime;
 
-  CANSparkMax m_armMotor = new CANSparkMax(ArmConstants.kArmMotorId, MotorType.kBrushed);
+  CANSparkMax m_armMotor = new CANSparkMax(ArmConstants.kArmMotorId, MotorType.kBrushless);
 
   /** Creates a new IntakeSubsystem. */
   public ArmSubsystem() {
+    m_armMotor.setInverted(true);
   }
 
   // Set arm motor speed
   public void setSpeed(double speed) {
     m_armMotor.set(speed);
+  }
+
+  // Set arm motor speed forward
+  public void setForwardSpeed(double speed) {
+    m_armMotor.set(speed);
+  }
+
+  // Set arm motor speed forward
+  public void setReverseSpeed(double speed) {
+    m_armMotor.set(-speed);
   }
 
   // Get current position
