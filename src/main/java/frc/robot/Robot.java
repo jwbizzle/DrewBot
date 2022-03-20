@@ -6,68 +6,143 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the
+ * build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  // private ArmSubsystem m_arm;
+  // private IntakeSubsystem m_intake;
+  // private DriveSubsystem m_drive;
+
+  private double m_autoStart = 0;
+  private boolean m_goForAuto = true;
 
   /**
-   * This function is run when the robot is first started up and should be used for any
+   * This function is run when the robot is first started up and should be used
+   * for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like
+   * diagnostics that you want ran during disabled, autonomous, teleoperated and
+   * test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and
    * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // Runs the Scheduler. This is responsible for polling buttons, adding
+    // newly-scheduled
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    // get a time for auton start to do events based on time later
+    m_autoStart = Timer.getFPGATimestamp();
+    // check dashboard icon to ensure good to do auto
+    // goForAuto = SmartDashboard.getBoolean("Go For Auto", false);
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    // if (m_autonomousCommand != null) {
+    // m_autonomousCommand.schedule();
+    // }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+
+    ArmSubsystem m_arm = m_robotContainer.getArm();
+    IntakeSubsystem m_intake = m_robotContainer.getIntake();
+    DriveSubsystem m_drive = m_robotContainer.getDrive();
+    System.out.println("Starting auto periodic");
+
+    if (m_arm.getPosition()) {
+      if (Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeUp) {
+        m_arm.setSpeed(ArmConstants.kArmUpTravel);
+      } else {
+        m_arm.setSpeed(ArmConstants.kArmHoldUp);
+      }
+    } else {
+      if (Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeDown) {
+        m_arm.setSpeed(-ArmConstants.kArmDownTravel);
+      } else {
+        m_arm.setSpeed(-ArmConstants.kArmHoldDown);
+      }
+    }
+
+    // Get time since start of auto
+    double autoTimeElapsed = Timer.getFPGATimestamp() - m_autoStart;
+    System.out.println(autoTimeElapsed);
+
+    if (m_goForAuto) {
+      // Series of timed events making up the flow of auto
+      if (autoTimeElapsed < 1) {
+        // spit out the ball for three seconds
+        m_intake.setSpeed(-1);
+      } else if (autoTimeElapsed < 6) {
+        // Stop spitting out the ball and drive backwards *slowly* for three seconds
+        m_intake.setSpeed(0);
+        m_drive.setSpeed(-0.3);
+      } else {
+        // Do nothing for the rest of auto
+        m_intake.setSpeed(0);
+        m_drive.setSpeed(0);
+      }
+    }
+  }
 
   @Override
   public void teleopInit() {
@@ -82,7 +157,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
   public void testInit() {
@@ -92,5 +168,6 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 }

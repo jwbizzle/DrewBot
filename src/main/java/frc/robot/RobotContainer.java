@@ -17,6 +17,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.SetArmPositionCommand;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.AutoTimeCommandGroup;
 import frc.robot.commands.SetDriveSpeedCommand;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.GrandTheftDriveCommand;
@@ -43,8 +44,8 @@ public class RobotContainer {
   // The autonomous routines
 
   // A simple auto routine that drives forward a specified duration in seconds and then stops.
-  private final Command m_simpleAuto = new SetDriveSpeedCommand(m_robotDrive, AutoConstants.kAutoDriveSpeed, AutoConstants.kAutoDriveRotation).withTimeout(AutoConstants.kAutoDriveDuration);
-
+  //private final Command m_simpleAuto = new SetDriveSpeedCommand(m_robotDrive, AutoConstants.kAutoDriveSpeed, AutoConstants.kAutoDriveRotation).withTimeout(AutoConstants.kAutoDriveDuration);
+  private final Command m_simpleAuto = new AutoTimeCommandGroup(m_robotDrive, m_robotIntake, m_robotArm);
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -73,7 +74,7 @@ public class RobotContainer {
       new GrandTheftDriveCommand(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
 
     // Add commands to the autonomous command chooser
-    m_chooser.setDefaultOption("Auto Drive", m_simpleAuto);
+    m_chooser.setDefaultOption("Auto Shoot and Taxi", m_simpleAuto);
 
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);
@@ -94,14 +95,29 @@ public class RobotContainer {
     Trigger rightTriggerButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > OIConstants.kDeadbandThreshold);
     Trigger leftTriggerButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > OIConstants.kDeadbandThreshold);
 
-    rightTriggerButton.whileActiveOnce(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorForwardSpeed));
-    leftTriggerButton.whileActiveOnce(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorReverseSpeed));
+    rightTriggerButton.whileActiveOnce(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorReverseSpeed));
+    leftTriggerButton.whileActiveOnce(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorForwardSpeed));
 
     rightTriggerButton.or(leftTriggerButton).whenInactive(new SetIntakeSpeedCommand(m_robotIntake, IntakeConstants.kIntakeMotorStopSpeed));
 
     //Arm Buttons
     new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new SetArmPositionCommand(m_robotArm, true));
     new JoystickButton(m_operatorController, Button.kLeftBumper.value).whenPressed(new SetArmPositionCommand(m_robotArm, false));
+  }
+
+  // Get current position
+  public ArmSubsystem getArm() {
+      return m_robotArm;
+  }
+
+  // Get current position
+  public IntakeSubsystem getIntake() {
+      return m_robotIntake;
+  }
+
+  // Get current position
+  public DriveSubsystem getDrive() {
+    return m_robotDrive;
   }
 
   /**

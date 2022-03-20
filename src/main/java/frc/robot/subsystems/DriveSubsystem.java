@@ -80,6 +80,11 @@ public class DriveSubsystem extends SubsystemBase {
   public void setMaxOutput(double maxOutput) {
     m_drive.setMaxOutput(maxOutput);
   }
+
+  public void setSpeed(double speed) {
+    m_leftMotors.set(speed);
+    m_rightMotors.set(speed);
+  }
   
   @Override
   public void periodic() {
