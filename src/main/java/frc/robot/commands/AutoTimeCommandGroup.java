@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -25,6 +26,6 @@ public class AutoTimeCommandGroup extends SequentialCommandGroup {
    
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetDriveSpeedCommand(m_drive, 0.1, 0),withTimeout(.5), new SetIntakeSpeedCommand(m_intake, -1).withTimeout(1.5), new SetDriveSpeedCommand(m_drive, -0.2, 0).withTimeout(5));
+    addCommands(new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorReverseSpeed).withTimeout(1.5), new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5));
   }
 }

@@ -6,14 +6,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,13 +22,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  // private ArmSubsystem m_arm;
-  // private IntakeSubsystem m_intake;
-  // private DriveSubsystem m_drive;
-
-  private double m_autoStart = 0;
-  private boolean m_goForAuto = true;
-
+ 
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -87,64 +75,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    // get a time for auton start to do events based on time later
-    m_autoStart = Timer.getFPGATimestamp();
-    // check dashboard icon to ensure good to do auto
-    // goForAuto = SmartDashboard.getBoolean("Go For Auto", false);
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    // m_autonomousCommand.schedule();
-    // }
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-
-    ArmSubsystem m_arm = m_robotContainer.getArm();
-    IntakeSubsystem m_intake = m_robotContainer.getIntake();
-    // DriveSubsystem m_drive = m_robotContainer.getDrive();
-    System.out.println("Starting auto periodic");
-
-    if (m_arm.getPosition()) {
-      if (Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeUp) {
-        m_arm.setSpeed(ArmConstants.kArmUpTravel);
-      } else {
-        m_arm.setSpeed(ArmConstants.kArmHoldUp);
-      }
-    } else {
-      if (Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeDown) {
-        m_arm.setSpeed(ArmConstants.kArmDownTravel);
-      } else {
-        m_arm.setSpeed(ArmConstants.kArmHoldDown);
-      }
-    }
-
-    // Get time since start of auto
-    double autoTimeElapsed = Timer.getFPGATimestamp() - m_autoStart;
-    System.out.println(autoTimeElapsed);
-
-    if (m_goForAuto) {
-      // Series of timed events making up the flow of auto
-      if (autoTimeElapsed < 1) {
-        // spit out the ball for three seconds
-        m_intake.setSpeed(-1);
-      } else {
-        // Do nothing for the rest of auto
-        m_intake.setSpeed(0);
-        // m_drive.arcadeDrive(0, 0);
-      }
-      /*
-      else if (autoTimeElapsed < 6) {
-        // Stop spitting out the ball and drive backwards *slowly* for three seconds
-        m_intake.setSpeed(0);
-        m_drive.arcadeDrive(-0.3, 0);
-      } 
-      */
-    }
   }
 
   @Override

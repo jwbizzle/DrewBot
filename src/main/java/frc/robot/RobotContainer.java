@@ -10,20 +10,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.SetArmPositionCommand;
-import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.AutoTimeCommandGroup;
-import frc.robot.commands.SetDriveSpeedCommand;
-// import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.GrandTheftDriveCommand;
 import frc.robot.commands.HalveDriveSpeedCommand;
 import frc.robot.commands.SetIntakeSpeedCommand;
-import frc.robot.commands.TestArmMotorCommand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -62,14 +57,6 @@ public class RobotContainer {
     configureButtonBindings();
        
     // Configure default commands
-    // Set the default drive command to split-stick arcade drive
-    
-    // A split-stick arcade command, with forward/backward controlled by the left
-    // hand, and turning controlled by the right.
-    // m_robotDrive.setDefaultCommand(new ArcadeDrive(m_robotDrive, m_driverController::getLeftY, m_driverController::getRightX));
-
-    // A split-stick arcade command, with forward/backward controlled by the left/right triggers 
-    // and turning controlled by the left stick.   
     m_robotDrive.setDefaultCommand(
       new GrandTheftDriveCommand(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
 
@@ -103,21 +90,6 @@ public class RobotContainer {
     //Arm Buttons
     new JoystickButton(m_operatorController, Button.kRightBumper.value).whenPressed(new SetArmPositionCommand(m_robotArm, true));
     new JoystickButton(m_operatorController, Button.kLeftBumper.value).whenPressed(new SetArmPositionCommand(m_robotArm, false));
-  }
-
-  // Get current position
-  public ArmSubsystem getArm() {
-      return m_robotArm;
-  }
-
-  // Get current position
-  public IntakeSubsystem getIntake() {
-      return m_robotIntake;
-  }
-
-  // Get current position
-  public DriveSubsystem getDrive() {
-    return m_robotDrive;
   }
 
   /**
