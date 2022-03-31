@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
 
     ArmSubsystem m_arm = m_robotContainer.getArm();
     IntakeSubsystem m_intake = m_robotContainer.getIntake();
-    DriveSubsystem m_drive = m_robotContainer.getDrive();
+    // DriveSubsystem m_drive = m_robotContainer.getDrive();
     System.out.println("Starting auto periodic");
 
     if (m_arm.getPosition()) {
@@ -117,9 +117,9 @@ public class Robot extends TimedRobot {
       }
     } else {
       if (Timer.getFPGATimestamp() - m_arm.getLastBurtTime() < ArmConstants.kArmTimeDown) {
-        m_arm.setSpeed(-ArmConstants.kArmDownTravel);
+        m_arm.setSpeed(ArmConstants.kArmDownTravel);
       } else {
-        m_arm.setSpeed(-ArmConstants.kArmHoldDown);
+        m_arm.setSpeed(ArmConstants.kArmHoldDown);
       }
     }
 
@@ -132,15 +132,18 @@ public class Robot extends TimedRobot {
       if (autoTimeElapsed < 1) {
         // spit out the ball for three seconds
         m_intake.setSpeed(-1);
-      } else if (autoTimeElapsed < 6) {
-        // Stop spitting out the ball and drive backwards *slowly* for three seconds
-        m_intake.setSpeed(0);
-        m_drive.setSpeed(-0.3);
       } else {
         // Do nothing for the rest of auto
         m_intake.setSpeed(0);
-        m_drive.setSpeed(0);
+        // m_drive.arcadeDrive(0, 0);
       }
+      /*
+      else if (autoTimeElapsed < 6) {
+        // Stop spitting out the ball and drive backwards *slowly* for three seconds
+        m_intake.setSpeed(0);
+        m_drive.arcadeDrive(-0.3, 0);
+      } 
+      */
     }
   }
 

@@ -30,7 +30,7 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kArmMotorId = 6; 
 
-    public static final double kArmHoldUp = 0.1;
+    public static final double kArmHoldUp = 0.08;
     public static final double kArmHoldDown = 0.08;
     public static final double kArmUpTravel = 0.35;  //Original was .5
     public static final double kArmDownTravel = 0.3; 

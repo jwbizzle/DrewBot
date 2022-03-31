@@ -36,6 +36,7 @@ public class DriveSubsystem extends SubsystemBase {
     // This was determined through trail and error.  In our code we'll invert
     // the "left" side and also negate the forward value in arcadeDrive().
     m_leftMotors.setInverted(true);
+    // m_drive.setSafetyEnabled(false);
   }
 
   /**
