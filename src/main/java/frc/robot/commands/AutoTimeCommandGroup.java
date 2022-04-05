@@ -23,9 +23,12 @@ public class AutoTimeCommandGroup extends SequentialCommandGroup {
     m_drive = drive;
     m_intake = intake;
     m_arm = arm;
-   
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorReverseSpeed).withTimeout(1.5), new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5), new SetIntakeSpeedCommand(m_intake, 0));
+    addCommands(
+        new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorReverseSpeed).withTimeout(1.5),
+        new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5),
+        new SetIntakeSpeedCommand(m_intake, 0));
   }
 }
