@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -29,6 +30,23 @@ public class AutoTimeCommandGroup extends SequentialCommandGroup {
     addCommands(
         new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorReverseSpeed).withTimeout(1.5),
         new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5),
-        new SetIntakeSpeedCommand(m_intake, 0));
+        
+        // Stop the motor
+        new SetIntakeSpeedCommand(m_intake, 0),
+        
+        // Drive backwards
+        new GrandTheftDriveCommand(
+          m_drive, 
+          () -> AutoConstants.kAutoDriveForwardSpeed, 
+          () -> AutoConstants.kAutoDriveReverseSpeed, 
+          () -> AutoConstants.kAutoDriveSteeringSpeed).withTimeout(3),
+        
+        // Stop driving
+        new GrandTheftDriveCommand(
+          m_drive, 
+          () -> 0.0, 
+          () -> 0.0, 
+          () -> 0.0)
+        );
   }
 }

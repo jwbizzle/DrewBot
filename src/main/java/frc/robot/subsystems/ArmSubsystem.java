@@ -6,7 +6,9 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants.ArmConstants;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -14,26 +16,49 @@ public class ArmSubsystem extends SubsystemBase {
   private boolean m_isUp = false;
   private double m_lastBurstTime;
 
-  CANSparkMax m_armMotor = new CANSparkMax(ArmConstants.kArmMotorId, MotorType.kBrushless);
+  private CANSparkMax m_armMotor = new CANSparkMax(ArmConstants.kArmMotorId, MotorType.kBrushless);
+  private RelativeEncoder m_encoder;
 
   /** Creates a new IntakeSubsystem. */
   public ArmSubsystem() {
+    /**
+     * The RestoreFactoryDefaults method can be used to reset the configuration parameters
+     * in the SPARK MAX to their factory default state. If no argument is passed, these
+     * parameters will not persist between power cycles
+     */
+    m_armMotor.restoreFactoryDefaults();
+
+    /**
+     * In order to read encoder values an encoder object is created using the
+     * getEncoder() method from an existing CANSparkMax object
+     */
+    m_encoder = m_armMotor.getEncoder();
+
+    /**
+     * Invert our amr motor.
+     */
     m_armMotor.setInverted(true);
   }
 
   // Set arm motor speed
   public void setSpeed(double speed) {
     m_armMotor.set(speed);
-  }
 
-  // Set arm motor speed forward
-  public void setForwardSpeed(double speed) {
-    m_armMotor.set(speed);
-  }
+    /**
+     * Encoder position is read from a RelativeEncoder object by calling the
+     * GetPosition() method.
+     * 
+     * GetPosition() returns the position of the encoder in units of revolutions
+     */
+    SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
 
-  // Set arm motor speed forward
-  public void setReverseSpeed(double speed) {
-    m_armMotor.set(-speed);
+    /**
+     * Encoder velocity is read from a RelativeEncoder object by calling the
+     * GetVelocity() method.
+     * 
+     * GetVelocity() returns the velocity of the encoder in units of RPM
+     */
+    SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
   }
 
   // Get current position

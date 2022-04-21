@@ -46,7 +46,9 @@ public final class Constants {
 
   public static final class AutoConstants {
     // Autonomous drive constants
-    public static final double kAutoDriveSpeed = 0.1;
+    public static final double kAutoDriveReverseSpeed = 0.25;
+    public static final double kAutoDriveForwardSpeed = 0.0;
+    public static final double kAutoDriveSteeringSpeed = 0.0;
     public static final double kAutoDriveRotation = 0.0;
     public static final double kAutoDriveDuration = 3;
 
