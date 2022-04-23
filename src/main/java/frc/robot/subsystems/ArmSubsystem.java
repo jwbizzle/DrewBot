@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.DebugConstants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -35,13 +36,18 @@ public class ArmSubsystem extends SubsystemBase {
     m_encoder = m_armMotor.getEncoder();
 
     /**
-     * Invert our amr motor.
+     * Invert our arm motor.
      */
     m_armMotor.setInverted(true);
   }
 
   // Set arm motor speed
   public void setSpeed(double speed) {
+    // Display values for debugging.
+    if (DebugConstants.kDebugArmSubsystem) {
+      System.out.println("ArmSubsystem.setSpeed - Setting motor speed: " + speed + ".");
+    }
+    
     m_armMotor.set(speed);
 
     /**

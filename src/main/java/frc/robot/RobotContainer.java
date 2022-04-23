@@ -58,7 +58,7 @@ public class RobotContainer {
        
     // Configure default commands
     m_robotDrive.setDefaultCommand(
-      new GrandTheftDriveCommand(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
+     new GrandTheftDriveCommand(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
 
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Auto Shoot and Taxi", m_simpleAuto);

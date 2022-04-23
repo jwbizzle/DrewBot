@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.DebugConstants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -18,6 +19,11 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {}
 
   public void setSpeed(double speed) {
+    // Display values for debugging.
+    if (DebugConstants.kDebugDriveSubsystem){
+      System.out.println("IntakeSubsystem.setSpeed - Setting motor speed: " + speed + ".");
+    }
+
     m_intakeMotor.set(speed);
   }
 

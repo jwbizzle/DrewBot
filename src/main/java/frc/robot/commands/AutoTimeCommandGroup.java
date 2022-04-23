@@ -10,6 +10,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.Constants.ArmConstants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -28,6 +29,7 @@ public class AutoTimeCommandGroup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+        new SetArmSpeedCommand(m_arm, ArmConstants.kArmHoldUp).withTimeout(3),
         new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorReverseSpeed).withTimeout(1.5),
         new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5),
         
@@ -39,14 +41,17 @@ public class AutoTimeCommandGroup extends SequentialCommandGroup {
           m_drive, 
           () -> AutoConstants.kAutoDriveForwardSpeed, 
           () -> AutoConstants.kAutoDriveReverseSpeed, 
-          () -> AutoConstants.kAutoDriveSteeringSpeed).withTimeout(3),
+          () -> AutoConstants.kAutoDriveSteeringSpeed).withTimeout(1.5),
         
         // Stop driving
         new GrandTheftDriveCommand(
           m_drive, 
           () -> 0.0, 
           () -> 0.0, 
-          () -> 0.0)
+          () -> 0.0),
+          
+        new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorReverseSpeed).withTimeout(1.5),
+        new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5)
         );
   }
 }

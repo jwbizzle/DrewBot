@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.Constants.DebugConstants;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.revrobotics.CANSparkMax;
@@ -46,14 +47,16 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rot the commanded rotation
    */
   public void arcadeDrive(double fwd, double rot) {
+    // Display values for debugging.
+    if (DebugConstants.kDebugDriveSubsystem){
+      if (Math.abs(fwd) > .1 || Math.abs(rot) > .1) {
+        System.out.println("DriveSubsystem.arcadeDrive - Forward: " + fwd + " Rotation: " + rot + ".");
+      }
+    }
+
     // Negate the forward/backward value to get the stick behaving correctly
     // since we inverted the left motors.
     m_drive.arcadeDrive(-fwd, rot);
-
-    // Display values for debugging.
-    // if (Math.abs(fwd) > .1 || Math.abs(rot) > .1) {
-    //   System.out.println("The forward value is " + fwd + " and the rotational value is " + rot + ".");
-    // }
   }
 
   /**
@@ -63,14 +66,15 @@ public class DriveSubsystem extends SubsystemBase {
    * @param steering the commanded steering
    */
   public void gtaDrive(double accleration, double steering) {
+    // Display values for debugging.
+    if (DebugConstants.kDebugDriveSubsystem){
+      System.out.println("DriveSubsystem.gtaDrive - Acceleration: " + accleration + " Steering: " + steering + ".");
+    }
     
     // Pass in the left speed first (which is the sum of acceleration and steering) 
     // and then the right speed (which is the difference).  Use the tankDrive method.
     m_drive.tankDrive(accleration + steering, accleration - steering, true);
-    // m_drive.arcadeDrive(accleration, steering);
-
-    // Display values for debugging.
-    // System.out.println("The acceleration value is " + accleration + " and the steering value is " + steering + ".");
+    // m_drive.arcadeDrive(accleration, steering); 
   }
 
   /**
