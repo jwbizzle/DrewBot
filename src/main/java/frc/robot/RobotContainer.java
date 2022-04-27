@@ -41,6 +41,7 @@ public class RobotContainer {
   // A simple auto routine that drives forward a specified duration in seconds and then stops.
   //private final Command m_simpleAuto = new SetDriveSpeedCommand(m_robotDrive, AutoConstants.kAutoDriveSpeed, AutoConstants.kAutoDriveRotation).withTimeout(AutoConstants.kAutoDriveDuration);
   private final Command m_simpleAuto = new AutoTimeCommandGroup(m_robotDrive, m_robotIntake, m_robotArm);
+  
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
