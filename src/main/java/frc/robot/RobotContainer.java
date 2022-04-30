@@ -15,6 +15,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.SetArmPositionCommand;
+import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.AutoTimeCommandGroup;
 import frc.robot.commands.GrandTheftDriveCommand;
 import frc.robot.commands.HalveDriveSpeedCommand;
@@ -59,7 +60,9 @@ public class RobotContainer {
        
     // Configure default commands
     m_robotDrive.setDefaultCommand(
-     new GrandTheftDriveCommand(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX));
+     new GrandTheftDriveCommand(m_robotDrive, m_driverController::getRightTriggerAxis, m_driverController::getLeftTriggerAxis, m_driverController::getLeftX)
+     // new ArcadeDriveCommand(m_robotDrive, m_driverController::getLeftY, m_driverController::getRightX)
+     );
 
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Auto Shoot and Taxi", m_simpleAuto);

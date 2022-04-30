@@ -49,7 +49,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void arcadeDrive(double fwd, double rot) {
     // Display values for debugging.
     if (DebugConstants.kDebugDriveSubsystem){
-      if (Math.abs(fwd) > .1 || Math.abs(rot) > .1) {
+      if (Math.abs(fwd) > DebugConstants.kDebugDriveSubsystemTreshold || Math.abs(rot) > DebugConstants.kDebugDriveSubsystemTreshold) {
         System.out.println("DriveSubsystem.arcadeDrive - Forward: " + fwd + " Rotation: " + rot + ".");
       }
     }
@@ -68,7 +68,9 @@ public class DriveSubsystem extends SubsystemBase {
   public void gtaDrive(double accleration, double steering) {
     // Display values for debugging.
     if (DebugConstants.kDebugDriveSubsystem){
-      System.out.println("DriveSubsystem.gtaDrive - Acceleration: " + accleration + " Steering: " + steering + ".");
+      if (Math.abs(accleration) > DebugConstants.kDebugDriveSubsystemTreshold || Math.abs(steering) > DebugConstants.kDebugDriveSubsystemTreshold) {
+        System.out.println("DriveSubsystem.gtaDrive - Acceleration: " + accleration + " Steering: " + steering + ".");
+      }
     }
     
     // Pass in the left speed first (which is the sum of acceleration and steering) 
@@ -94,5 +96,6 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    m_drive.feed();
   }
 }

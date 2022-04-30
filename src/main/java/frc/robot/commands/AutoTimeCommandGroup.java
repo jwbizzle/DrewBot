@@ -34,7 +34,8 @@ public class AutoTimeCommandGroup extends SequentialCommandGroup {
         new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5),
         
         // Stop the motor
-        new SetIntakeSpeedCommand(m_intake, 0),
+        new SetIntakeSpeedCommand(m_intake, 0).withTimeout(1.5),
+        
         
         // Drive backwards
         new GrandTheftDriveCommand(
@@ -48,10 +49,18 @@ public class AutoTimeCommandGroup extends SequentialCommandGroup {
           m_drive, 
           () -> 0.0, 
           () -> 0.0, 
-          () -> 0.0),
+          () -> 0.0).withTimeout(0.5),
+        
+        // Drive backwards
+        new SetDriveSpeedCommand(m_drive, 0.25).withTimeout(1.5),
+
+        // Stop driving
+        new SetDriveSpeedCommand(m_drive, 0.0).withTimeout(0.5),
           
+        // Running a few intake commands after driving to help debug.
         new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorReverseSpeed).withTimeout(1.5),
-        new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5)
+        new SetIntakeSpeedCommand(m_intake, IntakeConstants.kIntakeMotorForwardSpeed).withTimeout(1.5),
+        new SetIntakeSpeedCommand(m_intake, 0).withTimeout(1.5)
         );
   }
 }

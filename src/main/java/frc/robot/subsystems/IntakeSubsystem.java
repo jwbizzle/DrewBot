@@ -20,7 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void setSpeed(double speed) {
     // Display values for debugging.
-    if (DebugConstants.kDebugDriveSubsystem){
+    if (DebugConstants.kDebugArmSubsystem){
       System.out.println("IntakeSubsystem.setSpeed - Setting motor speed: " + speed + ".");
     }
 
